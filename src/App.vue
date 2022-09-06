@@ -9,14 +9,15 @@
     </p>
     <section id="satu">
       <h2>Experience</h2>
-      <div v-for="(data, index) in experiences" :key="data.id">
-        <p @click="showDesc(data)">
-          {{ index + 1 }}. {{ data.start }} - {{ data.end }},
-          {{ data.position }} at
-          {{ data.company }}
-        </p>
-        <p v-if="data.show">{{ data.description }}</p>
-      </div>
+      <ol>
+        <li v-for="data in experiences" :key="data.id">
+          <p @click="showDesc(data)">
+            {{ data.start }} - {{ data.end }}, {{ data.position }} at
+            {{ data.company }}
+          </p>
+          <p v-if="data.show">{{ data.description }}</p>
+        </li>
+      </ol>
     </section>
     <section id="2">
       <h2>Skills</h2>
@@ -34,14 +35,24 @@
     </section>
     <section id="3">
       <h2>Contact Me</h2>
-      <form>
+      <form @submit.prevent="submitForm()" ref="form">
         <p>Name:</p>
-        <input type="text" v-model="contact.name" required />
+        <input
+          type="text"
+          v-model="contact.name"
+          placeholder="Enter Your Name"
+          required
+        />
         <p>Email:</p>
-        <input type="email" v-model="contact.email" required />
+        <input
+          type="email"
+          v-model="contact.email"
+          placeholder="Enter Your Email"
+          required
+        />
         <p>Note:</p>
-        <textarea v-model="contact.note" required />
-        <button @click="submitContact()">Send</button>
+        <textarea v-model="contact.note" placeholder="Enter Note" required />
+        <button>Send</button>
       </form>
     </section>
   </main>
@@ -111,15 +122,16 @@ export default {
     showDesc(data) {
       data.show = !data.show;
     },
-    submitContact() {
+    submitForm() {
       alert(
-        "Terimakasih " +
+        " Thankyou " +
           this.contact.name +
-          " dengan " +
+          " we'll send you an email to " +
           this.contact.email +
-          "mengirimkan note " +
+          " regarding " +
           this.contact.note
       );
+      this.$refs.form.reset();
     },
   },
 };
@@ -181,7 +193,7 @@ form button {
   border: none;
 }
 
-section#satu div p {
+section#satu ol li p {
   cursor: pointer;
 }
 </style>
